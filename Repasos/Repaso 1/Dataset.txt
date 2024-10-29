@@ -1,0 +1,53 @@
+-- Base de datos de ejemplo para probar los enunciados de la consulta
+
+group: practicaParcial
+
+Especialista = {
+	Matricula:number,nombre:string,apellido:string,domicilio:string
+	101,"Laura","Fernandez","Calle Principal 123"
+	102,"Carlos","Rodriguez","Avenida Central 456"
+	103,"Ana","Martinez","Calle Secundaria 789"
+	104,"Luis","Gomez","Calle Norte 101"
+	105,"Maria","Lopez","Calle Sur 202"
+}
+
+ObraSocial = {
+	nombre:string,descripcion:string
+	"OSDE","Obra social con amplia cobertura médica"
+	"IOMA","Obra social del Estado provincial"
+	"Swiss Medical","Cobertura médica premium"
+	"Galeno","Cobertura de salud integral"
+	"Medicus","Plan de salud para empresas y familias"
+}
+
+Paciente = {
+	DNI:number,nombre:string,apellido:string,domicilio:string,telefono:string
+	20123456,"Juan","Perez","Calle Falsa 123","555-1234"
+	20234567,"Ana","Garcia","Avenida Siempreviva 742","555-5678"
+	20345678,"Luis","Martinez","Calle de la Paz 456","555-9012"
+	20456789,"Sofia","Sanchez","Plaza Mayor 78","555-3456"
+	20567890,"Pedro","Gomez","Calle Luna 90","555-7890"
+}
+
+Turno = {
+	Matricula:number,DNI:number,fecha:date,motivo:string,nombre:string,observaciones:string
+	101,20123456,2022-06-26,"Consulta general","OSDE","Chequeo de rutina"
+	102,20123456,2022-06-26,"Consulta general","OSDE","Chequeo de rutina"
+	103,20123456,2022-06-26,"Consulta general","OSDE","Chequeo de rutina"
+	104,20123456,2022-06-26,"Consulta general","OSDE","Chequeo de rutina"
+	105,20123456,2022-06-26,"Consulta general","OSDE","Chequeo de rutina"
+	102,20234567,2022-06-26,"Control de diabetes","IOMA","Revisión periódica"
+	103,20345678,2022-06-26,"Dolor de cabeza","Swiss Medical","Migraña diagnosticada"
+	104,20456789,2022-06-26,"Dolor de espalda","Galeno","Lumbalgia leve"
+	105,20567890,2022-06-26,"Chequeo cardíaco","Medicus","Estable"
+	101,20123456,2021-05-15,"Consulta general","OSDE","Chequeo general"
+	102,20234567,2019-11-30,"Control de peso","IOMA","Seguimiento mensual"
+	103,20345678,2021-07-20,"Dolor abdominal","Swiss Medical","Posible gastritis"
+	104,20456789,2020-03-10,"Chequeo","OSDE","Todo en orden"
+	105,20567890,2020-04-25,"Chequeo general","IOMA","Sin observaciones"
+	101,20123456,2020-06-15,"Consulta general","Galeno","Seguimiento"
+	102,20234567,2020-08-05,"Revisión dental","OSDE","Todo en orden"
+	104,20456789,2020-11-01,"Chequeo general","Swiss Medical","Sin novedades"
+	105,20567890,2020-12-20,"Revisión","IOMA","Sin anomalías"
+	103,20345678,2019-09-10,"Dolor muscular","Medicus","Ejercicios recomendados"
+}

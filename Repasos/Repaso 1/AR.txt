@@ -1,0 +1,24 @@
+-- 1
+π Turno.Matricula, Especialista.nombre, Especialista.apellido, Paciente.DNI, Paciente.nombre, Paciente.apellido, Paciente.telefono, Turno.fecha, ObraSocial.nombre, ObraSocial.descripcion (σ Turno.Matricula = Especialista.Matricula ∧ Turno.fecha = date('2022-06-26') (Especialista⨯(σ Turno.nombre = ObraSocial.nombre (ObraSocial⨯(σ Turno.DNI = Paciente.DNI (Paciente⨯Turno))))))
+
+-- 2 Mostrar todos los pacientes que se atendieron con todos los especialistas
+PAC_ESP = π Paciente.DNI, Especialista.Matricula (Paciente⨯Especialista)
+
+PAC_ESP_TURNO = π Turno.DNI, Turno.Matricula (Turno)
+
+Faltantes = PAC_ESP - PAC_ESP_TURNO
+
+PacientesConTodosEspecialistas=π DNI (Paciente) - π DNI (Faltantes)
+
+(Paciente⨝PacientesConTodosEspecialistas)
+
+-- 3 Mostrar todos los pacientes que se hayan atendido en 2021 y no se hayan atendido en 2019
+P2021 = π Turno.DNI (σ year(Turno.fecha) = 2021 (Turno))
+P2019 = π Turno.DNI (σ year(Turno.fecha) = 2019 (Turno))
+π Paciente.DNI, Paciente.nombre, Paciente.apellido, Paciente.domicilio, Paciente.telefono (σ Paciente.DNI = Turno.DNI (Paciente⨯(P2021 - P2019)))
+
+
+-- 4 Mostrar los pacientes que se atendieron con la obra social "OSDE" y tambien "IOMA"
+IOMA = π Turno.DNI (σ Turno.nombre = 'IOMA' (Turno))
+OSDE = π Turno.DNI (σ Turno.nombre = 'OSDE' (Turno))
+π Paciente.DNI, Paciente.nombre, Paciente.apellido, Paciente.domicilio, Paciente.telefono (σ Paciente.DNI = Turno.DNI (Paciente⨯(IOMA ∩ OSDE)))
