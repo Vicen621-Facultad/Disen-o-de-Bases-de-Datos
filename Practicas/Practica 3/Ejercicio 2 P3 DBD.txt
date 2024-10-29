@@ -1,0 +1,52 @@
+-- 1. Listar datos personales de integrantes con apellido ‘Garcia’ o fecha de nacimiento anterior a 2005, que toquen en bandas de rock and roll.
+/*
+π Integrante.DNI, Integrante.nombre, Integrante.apellido, Integrante.fecha_nacimiento (
+	σ Banda.genero_musical='Rock and Roll' (Banda⨝Integrante)
+)
+*/
+
+-- 2. Listar nombre de escenario, ubicación y descripción de escenarios que no tuvieron recitales durante 2019.
+/*
+π Escenario.nombre_escenario, Escenario.ubicacion, Escenario.descripcion (Escenario)
+-
+π Escenario.nombre_escenario, Escenario.ubicacion, Escenario.descripcion (
+	σ Year(Recital.fecha)=2019 (Escenario⨝Recital)
+)
+*/
+
+-- 3. Listar nombre de escenario, ubicación y descripción de escenarios que tuvieron recitales con género musical rock and roll o tuvieron recitales durante 2020.
+/*
+π Escenario.nombre_escenario, Escenario.ubicacion, Escenario.descripcion (
+	σ Banda.genero_musical='Rock and Roll' ∨ Year(Recital.fecha)=2020 (Banda⨝Escenario⨝Recital)
+)
+*/
+
+-- 4. Listar nombre, género musical y año de creación de bandas que hayan realizado recitales en escenarios cubiertos durante 2019. // cubierto es true, false según corresponda
+/*
+π Banda.nombreBanda, Banda.genero_musical, Banda.creacion (
+	σ Escenario.cubierto ∧ Year(Recital.fecha)=2019 (Banda⨝Escenario⨝Recital)
+)
+*/
+
+-- 5. Listar DNI, nombre, apellido, dirección y email de integrantes nacidos entre 2000 y 2005 y que toquen en bandas con género pop que hayan tenido recitales durante 2020.
+/*
+π Integrante.DNI, Integrante.nombre, Integrante.apellido, Integrante.direccion, Integrante.email (
+	σ (Year(Integrante.fecha_nacimiento)≥2000 ∧ Year(Integrante.fecha_nacimiento)≤2005) ∧ Banda.genero_musical='Pop' ∧ Year(Recital.fecha)=2020 (Integrante⨝Banda⨝Recital)
+)
+*/
+
+-- 6. Listar DNI, nombre, apellido,email de integrantes que hayan tocado en el escenario con nombre ‘Gustavo Cerati’ y no hayan tocado en el escenario con nombre ‘Carlos Gardel’.
+
+-- Los que tocaron en el escenario 'Gustavo Cerati'
+cerati = π Integrante.DNI, Integrante.nombre, Integrante.apellido, Integrante.email (
+	σ Escenario.nombre_escenario='Gustavo Cerati' (Integrante⨝Recital⨝Escenario)	
+)
+
+-- Los que tocaron en el escenario 'Carlos Gardel'
+gardel = π Integrante.DNI, Integrante.nombre, Integrante.apellido, Integrante.email (
+	σ Escenario.nombre_escenario='Carlos Gardel' (Integrante⨝Recital⨝Escenario)	
+)
+
+π Integrante.DNI, Integrante.nombre, Integrante.apellido, Integrante.email (cerati - gardel)
+
+-- 
