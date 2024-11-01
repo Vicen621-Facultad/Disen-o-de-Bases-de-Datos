@@ -1,3 +1,5 @@
+USE Ejercicio9;
+
 -- 1. Listar nombre, descripción, fecha de inicio y fecha de fin de proyectos ya finalizados que no fueron terminados antes de la fecha de fin estimada.
 SELECT p.nombrP, p.descripcion, p.fechaInicioP, p.fechaFinP
 FROM Proyecto p
@@ -45,3 +47,20 @@ WHERE e.DNI NOT IN (
     FROM Empleado_Equipo ee
     WHERE ee.descripcionRol = 'Lider'
 );
+
+-- 8. Listar nombre de equipo y descripción de tecnologías de equipos que hayan sido asignados como equipos frontend y backend.
+SELECT e.nombreE, e.descTecnologias
+FROM Equipo e
+WHERE e.codEquipo IN (
+	SELECT p.equipoBackend
+    FROM Proyecto p
+) AND e.codEquipo IN (
+	SELECT p.equipoFrontend
+    FROM Proyecto p
+);
+
+-- 9. Listar nombre, descripción, fecha de inicio, nombre y apellido de responsables de proyectos que se estiman finalizar durante 2025.
+SELECT p.nombrP, p.descripcion, p.fechaInicioP, e.nombre, e.apellido
+FROM Empleado e
+INNER JOIN Proyecto p ON p.DNIResponsable = e.DNI
+WHERE YEAR(fechaFinEstimada) = 2025
