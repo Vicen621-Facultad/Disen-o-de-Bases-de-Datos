@@ -1,4 +1,75 @@
+CREATE DATABASE Ejercicio9;
 USE Ejercicio9;
+
+-- Crear Tablas
+CREATE TABLE Empleado (
+    DNI INT PRIMARY KEY,
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    telefono VARCHAR(15),
+    direccion VARCHAR(100),
+    fechaIngreso DATE
+);
+
+CREATE TABLE Equipo (
+    codEquipo INT PRIMARY KEY,
+    nombreE VARCHAR(50),
+    descTecnologias VARCHAR(100),
+    DNILider INT,
+    FOREIGN KEY (DNILider) REFERENCES Empleado(DNI)
+);
+
+CREATE TABLE Proyecto (
+    codProyecto INT PRIMARY KEY,
+    nombrP VARCHAR(100),
+    descripcion TEXT,
+    fechaInicioP DATE,
+    fechaFinP DATE,
+    fechaFinEstimada DATE,
+    DNIResponsable INT,
+    equipoBackend INT,
+    equipoFrontend INT,
+    FOREIGN KEY (DNIResponsable) REFERENCES Empleado(DNI),
+    FOREIGN KEY (equipoBackend) REFERENCES Equipo(codEquipo),
+    FOREIGN KEY (equipoFrontend) REFERENCES Equipo(codEquipo)
+);
+
+CREATE TABLE Empleado_Equipo (
+    codEquipo INT,
+    DNI INT,
+    fechaInicio DATE,
+    fechaFin DATE,
+    descripcionRol VARCHAR(100),
+    PRIMARY KEY (codEquipo, DNI),
+    FOREIGN KEY (codEquipo) REFERENCES Equipo(codEquipo),
+    FOREIGN KEY (DNI) REFERENCES Empleado(DNI)
+);
+
+-- Insertar datos de ejemplo
+INSERT INTO Empleado (DNI, nombre, apellido, telefono, direccion, fechaIngreso) VALUES
+(12345678, 'Juan', 'Perez', '123456789', 'Calle Falsa 123', '2020-01-01'),
+(23456789, 'Ana', 'Garcia', '987654321', 'Calle Verdadera 456', '2019-02-15'),
+(34567890, 'Luis', 'Martinez', '555555555', 'Av. Siempre Viva 742', '2018-06-10'),
+(45678901, 'Maria', 'Lopez', '444444444', 'Calle Sin Nombre 101', '2017-09-23');
+
+INSERT INTO Equipo (codEquipo, nombreE, descTecnologias, DNILider) VALUES
+(1, 'Backend Team', 'Java, Spring Boot', 12345678),
+(2, 'Frontend Team', 'JavaScript, React', 23456789),
+(3, 'Data Science Team', 'Python, Machine Learning', 34567890);
+
+INSERT INTO Proyecto (codProyecto, nombrP, descripcion, fechaInicioP, fechaFinP, fechaFinEstimada, DNIResponsable, equipoBackend, equipoFrontend) VALUES
+(1, 'Proyecto A', 'Proyecto de desarrollo A', '2023-01-01', '2023-12-01', '2023-10-01', 12345678, 1, 2),
+(2, 'Proyecto B', 'Proyecto de desarrollo B', '2022-06-01', '2023-05-01', '2023-05-01', 23456789, 1, 3),
+(3, 'Proyecto X', 'Proyecto especial X', '2024-01-01', NULL, '2025-12-31', 34567890, 2, 3);
+
+INSERT INTO Empleado_Equipo (codEquipo, DNI, fechaInicio, fechaFin, descripcionRol) VALUES
+(1, 12345678, '2020-01-01', NULL, 'Desarrollador Backend'),
+(2, 23456789, '2019-02-15', NULL, 'Desarrollador Frontend'),
+(3, 34567890, '2018-06-10', NULL, 'Data Scientist');
+
+------------------
+--  EJERCICIOS  --
+------------------
 
 -- 1. Listar nombre, descripción, fecha de inicio y fecha de fin de proyectos ya finalizados que no fueron terminados antes de la fecha de fin estimada.
 SELECT p.nombrP, p.descripcion, p.fechaInicioP, p.fechaFinP
